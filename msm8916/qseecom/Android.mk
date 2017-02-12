@@ -15,5 +15,5 @@
 LOCAL_PATH := $(call my-dir)
 
 ifneq ($(filter msm8916,$(TARGET_BOARD_PLATFORM)),)
-
+include $(LOCAL_PATH)/qseecom-vendor.mk
 endif
