@@ -16,11 +16,12 @@ ifeq ($(QCPATH),)
 PROPRIETARY_PATH := vendor/qcom/binaries/msm8916/drm/proprietary
 
 PRODUCT_COPY_FILES += \
-	$(PROPRIETARY_PATH)/lib/drm/libdrmwvmplugin.so:system/lib/drm/libdrmwvmplugin.so \
-	$(PROPRIETARY_PATH)/lib/libdrmdecrypt.so:system/lib/libdrmdecrypt.so \
+	$(PROPRIETARY_PATH)/lib/liboemcrypto.so:system/lib/liboemcrypto.so \
+	$(PROPRIETARY_PATH)/vendor/lib/libdrmdecrypt.so:system/vendor/lib/libdrmdecrypt.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libwvm.so:system/vendor/lib/libwvm.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libWVStreamControlAPI_L1.so:system/vendor/lib/libWVStreamControlAPI_L1.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libwvdrm_L1.so:system/vendor/lib/libwvdrm_L1.so \
+	$(PROPRIETARY_PATH)/vendor/lib/drm/libdrmwvmplugin.so:system/vendor/lib/drm/libdrmwvmplugin.so \
 	$(PROPRIETARY_PATH)/vendor/lib/drm/libdrmprplugin.so:system/vendor/lib/drm/libdrmprplugin.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libdrmfs.so:system/vendor/lib/libdrmfs.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libdrmtime.so:system/vendor/lib/libdrmtime.so \
