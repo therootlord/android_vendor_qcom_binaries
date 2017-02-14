@@ -16,5 +16,17 @@ ifeq ($(QCPATH),)
 LOCAL_PATH := $(call my-dir)
 PROPRIETARY_PATH := $(LOCAL_PATH)/proprietary
 
+######################
+### libqct_resampler
+include $(CLEAR_VARS)
+LOCAL_MODULE       := libqct_resampler
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_OWNER := qcom
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
+LOCAL_SRC_FILES    := proprietary/vendor/lib/libqct_resampler.so
+include $(BUILD_PREBUILT)
+######################
 
 endif
