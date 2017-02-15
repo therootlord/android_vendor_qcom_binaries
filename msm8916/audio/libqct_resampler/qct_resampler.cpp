@@ -39,6 +39,9 @@ int open_handle() {
 	        return 1;
 	    }
 	}
+	else { /* library was opened already */
+		return 0;
+	}
 
 	/* get the function ptrs */
 	MemAlloc_t qct_memAlloc = (MemAlloc_t) dlsym(qct_handle, "MemAlloc");
