@@ -16,6 +16,9 @@ ifeq ($(QCPATH),)
 LOCAL_PATH := $(call my-dir)
 PROPRIETARY_PATH := $(LOCAL_PATH)/proprietary
 
+PRODUCT_COPY_FILES += \
+	$(PROPRIETARY_PATH)/vendor/lib/libqct_resampler.so:system/vendor/lib/libqct_resampler.qcom.so
+
 ######################
 ### libqct_resampler wrapper
 include $(CLEAR_VARS)
