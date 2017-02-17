@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ifeq ($(QCPATH),)
-PROPRIETARY_PATH := vendor/qcom/binaries/msm8916/qseecom/proprietary
+PROPRIETARY_PATH := vendor/qcom/binaries/msm8916/qcom/proprietary
 
 PRODUCT_COPY_FILES += \
 	$(PROPRIETARY_PATH)/bin/qcom-system-daemon:system/bin/qcom-system-daemon \
