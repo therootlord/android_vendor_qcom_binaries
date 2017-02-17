@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string>
 #include <sys/types.h>
 #include <dlfcn.h>
 #include "QCT_Resampler.h"
@@ -29,6 +30,31 @@ Init_t qct_init = NULL;
 Resample90dB_t qct_resample90dB = NULL;
 GetNumInSamp_t qct_getNumInSamp = NULL;
 
+/* Return a pointer to the function symbol, or
+ * NULL if it cannot be found. */
+void * get_func_sym (std::string symbol) {
+
+	std::string namespace_name ("android");
+	std::string class_name ("QCT_Resampler");
+	std::string sym_name;
+
+	void * sym = NULL;
+
+	if ( (sym = dlsym(qct_handle, symbol.c_str())) == NULL) {
+		/* try to resolve the name after appending
+		 * the class and namespace */
+		sym_name = class_name + "::" + symbol;
+
+		/* try a third time if the last one was NULL */
+		if ( (sym = dlsym(qct_handle, sym_name.c_str())) == NULL) {
+			sym_name = namespace_name + "::" + class_name +
+				"::" + symbol;
+			sym = dlsym(qct_handle, sym_name.c_str());
+		}
+	}
+	return sym;
+}
+
 /* Called to open the handle */
 int open_handle() {
 	/* try opening the library */	
@@ -44,17 +70,16 @@ int open_handle() {
 	}
 
 	/* get the function ptrs */
-	MemAlloc_t qct_memAlloc = (MemAlloc_t) dlsym(qct_handle, "MemAlloc");
-	Init_t qct_init = (Init_t) dlsym(qct_handle, "Init");
-	Resample90dB_t qct_resample90dB = (Resample90dB_t) dlsym(qct_handle, "Resample90dB");
-	GetNumInSamp_t qct_getNumInSamp = (GetNumInSamp_t) dlsym(qct_handle, "GetNumInSamp");
+	MemAlloc_t qct_memAlloc = (MemAlloc_t) get_func_sym(std::string("MemAlloc"));
+	Init_t qct_init = (Init_t) get_func_sym("Init");
+	Resample90dB_t qct_resample90dB = (Resample90dB_t) get_func_sym(std::string("Resample90dB"));
+	GetNumInSamp_t qct_getNumInSamp = (GetNumInSamp_t) get_func_sym(std::string("GetNumInSamp"));
 
     /* check that all the function ptrs are valid */
     if (!qct_memAlloc || !qct_init || !qct_resample90dB || !qct_getNumInSamp)  {
         fprintf(stderr, "%s\n", dlerror());
         return 1;
     }
-
     return 0;
 }
 
@@ -64,7 +89,6 @@ size_t QCT_Resampler::MemAlloc(int bitDepth, int inChannelCount, int32_t inSampl
 	if (open_handle()) return EXIT_FAILURE;
 	
 	return qct_memAlloc(bitDepth, inChannelCount, inSampleRate, sampleRate);
-
 }
 
 void QCT_Resampler::Init(int16_t *pState, int32_t inChannelCount, int32_t inSampleRate, int32_t mSampleRate, int32_t in) {
