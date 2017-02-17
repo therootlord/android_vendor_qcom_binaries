@@ -21,4 +21,20 @@ PRODUCT_COPY_FILES += \
 	$(PROPRIETARY_PATH)/vendor/lib/libQSEEComAPI.so:system/vendor/lib/libQSEEComAPI.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libssd.so:system/vendor/lib/libssd.so \
 	$(PROPRIETARY_PATH)/vendor/lib/librpmb.so:system/vendor/lib/librpmb.so
+
+######################
+### libperipheral_client
+include $(CLEAR_VARS)
+LOCAL_MODULE       := libperipheral_client
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_OWNER := qcom
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
+LOCAL_SRC_FILES    := proprietary/vendor/lib/$(LOCAL_MODULE).so
+include $(BUILD_PREBUILT)
+######################
+
+PRODUCT_PACKAGES += libperipheral_client
+
 endif
