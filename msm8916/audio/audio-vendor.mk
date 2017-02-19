@@ -25,6 +25,7 @@ include $(CLEAR_VARS)
 LOCAL_SRC_FILES := libqct_resampler/qct_resampler.cpp
 LOCAL_MODULE := libqct_resampler
 LOCAL_MODULE_TAGS := optional
+LOCAL_SHARED_LIBRARIES := libcutils liblog
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
 LOCAL_CFLAGS := -Wall -ldl
