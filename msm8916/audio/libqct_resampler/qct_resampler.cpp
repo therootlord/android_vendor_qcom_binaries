@@ -26,6 +26,17 @@
 #include <dlfcn.h>
 #include "QCT_Resampler.h"
 
+#define LOG_TAG "QCT_Resampler_Wrapper"
+#include <cutils/log.h>
+
+#ifndef ALOGE
+	#define ALOGE LOGE
+#endif
+
+#ifndef ALOGD
+	#define ALOGD LOGD
+#endif
+
 namespace android {
 
 #define LIBQCT_RESAMPLER "libqct_resampler.qcom.so"
@@ -51,15 +62,17 @@ int open_handle() {
 	/* try opening the library */	
 	if (!qct_handle) {
 		qct_handle = dlopen(LIBQCT_RESAMPLER, RTLD_LAZY);
-	    if (!qct_handle) {
+		if (!qct_handle) {
 		/* try opening the library using the full path */
 		if (!(qct_handle = dlopen(LIBQCT_RESAMPLER_FULL, RTLD_LAZY))) {
-			fprintf(stderr, "%s\n", dlerror());
+			ALOGE("%s\n", dlerror());
 			return 1;
-		    }
-	    }
+			}
+		}
+		ALOGD("libqct_resampler opened successfully.\n");
 	}
 	else { /* library was opened already */
+		ALOGD("libqct_resampler opened successfully.\n");
 		return 0;
 	}
 
@@ -69,12 +82,13 @@ int open_handle() {
 	Resample90dB_t qct_resample90dB = (Resample90dB_t) dlsym(qct_handle, "android::QCT_Resampler::Resample90dB");
 	GetNumInSamp_t qct_getNumInSamp = (GetNumInSamp_t) dlsym(qct_handle, "android::QCT_Resampler::GetNumInSamp");
 
-    /* check if all the function pointers are valid */
-    if (!qct_memAlloc || !qct_init || !qct_resample90dB || !qct_getNumInSamp)  {
-        fprintf(stderr, "%s\n", dlerror());
-        return 1;
-    }
-    return 0;
+	/* check if all the function pointers are valid */
+	if (!qct_memAlloc || !qct_init || !qct_resample90dB || !qct_getNumInSamp)  {
+		ALOGE("%s\n", dlerror());
+		return 1;
+	}
+	ALOGD("libqct_resampler symbols found and assigned.\n");
+	return 0;
 }
 
 size_t QCT_Resampler::MemAlloc(int bitDepth, int inChannelCount, int32_t inSampleRate, int32_t sampleRate) {
@@ -91,6 +105,7 @@ void QCT_Resampler::Init(int16_t *pState, int32_t inChannelCount, int32_t inSamp
 	if (open_handle()) return;
 
 	/* call the function */
+	ALOGD("discarded last function call parameter %d in QCT_Resampler::Init.\n", in);
 	qct_init(pState, inChannelCount, inSampleRate, mSampleRate);
 }
 
