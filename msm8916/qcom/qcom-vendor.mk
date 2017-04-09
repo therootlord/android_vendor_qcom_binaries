@@ -18,7 +18,6 @@ PROPRIETARY_PATH := vendor/qcom/binaries/msm8916/qcom/proprietary
 PRODUCT_COPY_FILES += \
 	$(PROPRIETARY_PATH)/bin/qcom-system-daemon:system/bin/qcom-system-daemon \
 	$(PROPRIETARY_PATH)/bin/qseecomd:system/bin/qseecomd \
-	$(PROPRIETARY_PATH)/vendor/lib/hw/gatekeeper.msm8916.so:system/vendor/lib/hw/gatekeeper.msm8916.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libQSEEComAPI.so:system/vendor/lib/libQSEEComAPI.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libssd.so:system/vendor/lib/libssd.so \
 	$(PROPRIETARY_PATH)/vendor/lib/libperipheral_client.so:system/vendor/lib/libperipheral_client.so \
