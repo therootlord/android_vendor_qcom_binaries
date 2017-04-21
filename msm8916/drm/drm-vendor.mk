@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(QCPATH),)
+ifneq ($(filter msm8916,$(TARGET_BOARD_PLATFORM)),)
 PROPRIETARY_PATH := vendor/qcom/binaries/msm8916/drm/proprietary
 
 PRODUCT_COPY_FILES += \

@@ -15,5 +15,16 @@
 LOCAL_PATH := $(call my-dir)
 
 ifneq ($(filter msm8916,$(TARGET_BOARD_PLATFORM)),)
-include $(LOCAL_PATH)/qcom-vendor.mk
+
+### libperipheral_client
+include $(CLEAR_VARS)
+LOCAL_MODULE       := libperipheral_client
+LOCAL_MODULE_TAGS  := optional
+LOCAL_MODULE_OWNER := qcom
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_SHARED_LIBRARIES)
+LOCAL_SRC_FILES    := proprietary/vendor/lib/$(LOCAL_MODULE).so
+include $(BUILD_PREBUILT)
+
 endif
